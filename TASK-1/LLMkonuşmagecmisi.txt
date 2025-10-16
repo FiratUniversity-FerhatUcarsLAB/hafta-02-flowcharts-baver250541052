@@ -1,0 +1,179 @@
+Sistem Gereksinimleri:
+
+Kart takılır ve PIN sorulur
+
+3 hatalı PIN giri¸sinden sonra kart bloke olur (d¨ong¨u)
+
+Bakiye sorgulanır
+
+C¸ekilmek istenen tutar girilir
+
+Yetersiz bakiye kontrol¨u yapılır (ko¸sul)
+
+20 TL’nin katları olmalı (ko¸sul)
+
+G¨unl¨uk limit kontrol¨u (ko¸sul)
+
+Para verilir ve fi¸s ¸cıkar
+
+Ba¸ska i¸slem yapmak ister misiniz? (d¨ong¨u) “ATM para ¸cekme sistemi i¸cin detaylı pseudocode yazmanı istiyorum.
+
+S¸unları i¸cermeli: PIN do˘grulama (3 hak), bakiye kontrol¨u, tutar
+
+kontrol¨u (20 TL katları), g¨unl¨uk limit kontrol¨u, i¸slem tekrarı se¸cene˘gi. T¨um
+
+adımları BAS¸LA, OKU, YAZ, EGER- ˘ ˙
+
+ISE, DONG ¨ U yapılarıyla yaz.” “Bu pseudocode’u Graphviz DOT diline ¸cevir. Ba¸sla/Bitir i¸cin oval,
+
+girdi/¸cıktı i¸cin parallelogram, i¸slem i¸cin box, karar i¸cin diamond kullan.
+
+T¨um okları ve etiketleri ekle.”
+
+Elbette, ATM para çekme sistemi için istenen adımları içeren detaylı pseudocode ve bu kodun Graphviz DOT dilindeki karşılığı aşağıda sunulmuştur.
+
+ATM Para Çekme Sistemi için Pseudocode
+Bu pseudocode, belirtilen tüm adımları ve yapıları içermektedir.
+
+BAŞLA
+
+  // Değişken Tanımlamaları
+  TANIMLA pin_deneme_hakki = 3
+  TANIMLA dogru_pin = 1234 // Örnek PIN
+  TANIMLA bakiye = 1500   // Örnek Bakiye
+  TANIMLA gunluk_limit = 1000 // Örnek Günlük Limit
+  TANIMLA pin_dogru_mu = HAYIR
+
+  // PIN Doğrulama Döngüsü
+  DÖNGÜ (pin_deneme_hakki > 0 VE pin_dogru_mu == HAYIR)
+    YAZ "Lütfen 4 haneli PIN kodunuzu giriniz:"
+    OKU girilen_pin
+
+    EĞER girilen_pin == dogru_pin
+      pin_dogru_mu = EVET
+    DEĞİLSE
+      pin_deneme_hakki = pin_deneme_hakki - 1
+      EĞER pin_deneme_hakki > 0
+        YAZ "Hatalı PIN. Kalan deneme hakkınız: " + pin_deneme_hakki
+      DEĞİLSE
+        YAZ "3 hatalı giriş yaptınız. Kartınız bloke olmuştur."
+      SON-EĞER
+    SON-EĞER
+  SON-DÖNGÜ
+
+  // Ana İşlem Döngüsü
+  EĞER pin_dogru_mu == EVET
+    TANIMLA baska_islem = EVET
+    DÖNGÜ (baska_islem == EVET)
+      YAZ "Mevcut Bakiyeniz: " + bakiye + " TL"
+      YAZ "Çekmek istediğiniz tutarı giriniz:"
+      OKU cekilecek_tutar
+
+      // Bakiye Kontrolü
+      EĞER cekilecek_tutar > bakiye
+        YAZ "Yetersiz bakiye."
+      DEĞİLSE
+        // 20 TL Katları Kontrolü
+        EĞER cekilecek_tutar % 20 != 0
+          YAZ "Lütfen 20 TL ve katları bir tutar giriniz."
+        DEĞİLSE
+          // Günlük Limit Kontrolü
+          EĞER cekilecek_tutar > gunluk_limit
+            YAZ "Günlük para çekme limitini aştınız. Çekebileceğiniz maksimum tutar: " + gunluk_limit + " TL"
+          DEĞİLSE
+            // İşlemi Gerçekleştir
+            bakiye = bakiye - cekilecek_tutar
+            gunluk_limit = gunluk_limit - cekilecek_tutar
+            YAZ "Lütfen paranızı alınız."
+            YAZ "Fişiniz yazdırılıyor."
+            YAZ "Kalan Bakiye: " + bakiye + " TL"
+            YAZ "Kalan Günlük Limit: " + gunluk_limit + " TL"
+          SON-EĞER
+        SON-EĞER
+      SON-EĞER
+
+      YAZ "Başka bir işlem yapmak ister misiniz? (E/H)"
+      OKU cevap
+      EĞER cevap == "H" VEYA cevap == "h"
+        baska_islem = HAYIR
+      SON-EĞER
+    SON-DÖNGÜ
+    YAZ "İyi günler dileriz."
+  SON-EĞER
+
+BİTİR
+Graphviz DOT Dili ile Akış Şeması
+Bu DOT kodu, yukarıdaki pseudocode'un mantıksal akışını görsel bir şemaya dönüştürür. Bu kodu Graphviz uyumlu bir araçta (örneğin online bir Graphviz editörü) çalıştırarak akış şemasını oluşturabilirsiniz.
+
+Kod snippet'i
+digraph ATM_Flowchart {
+    // Grafik ayarları
+    graph [fontname = "Arial", splines=ortho];
+    node [fontname = "Arial", style=filled, fillcolor="#F8F8F8"];
+    edge [fontname = "Arial"];
+
+    // Düğüm Tanımlamaları
+    // Oval: Başla/Bitir
+    basla [label="Başla", shape=oval, fillcolor="#90EE90"];
+    bitir [label="Bitir", shape=oval, fillcolor="#FFB6C1"];
+    kart_bloke [label="Kart Bloke Oldu", shape=box, style="filled,rounded", fillcolor="#FF6347"];
+
+    // Parallelogram: Girdi/Çıktı
+    kart_tak [label="Kart Takılır", shape=parallelogram, fillcolor="#ADD8E6"];
+    pin_sor [label="PIN Giriniz", shape=parallelogram, fillcolor="#ADD8E6"];
+    tutar_gir [label="Çekilecek Tutarı Giriniz", shape=parallelogram, fillcolor="#ADD8E6"];
+    para_ver [label="Para Verilir", shape=parallelogram, fillcolor="#ADD8E6"];
+    fis_cikar [label="Fiş Çıkarılır", shape=parallelogram, fillcolor="#ADD8E6"];
+    bakiye_goster [label="Bakiye Sorgulanır ve Gösterilir", shape=parallelogram, fillcolor="#ADD8E6"];
+    hata_mesaji [label="Hata Mesajı Gösterilir\n(Yetersiz Bakiye / 20'nin Katı Değil / Limit Aşıldı)", shape=parallelogram, fillcolor="#FFFFE0"];
+    baska_islem_sor [label="Başka İşlem İster misiniz? (E/H)", shape=parallelogram, fillcolor="#ADD8E6"];
+
+    // Box: İşlem
+    deneme_hakki_azalt [label="Deneme Hakkı Azaltılır", shape=box];
+    islem_gerceklestir [label="Bakiye ve Limit Güncellenir", shape=box];
+
+    // Diamond: Karar
+    pin_kontrol [label="PIN Doğru mu?", shape=diamond, fillcolor="#FFD700"];
+    deneme_hakki_kontrol [label="Deneme Hakkı > 0 mı?", shape=diamond, fillcolor="#FFD700"];
+    bakiye_kontrol [label="Tutar <= Bakiye mi?", shape=diamond, fillcolor="#FFD700"];
+    tutar_kontrol [label="Tutar % 20 == 0 mı?", shape=diamond, fillcolor="#FFD700"];
+    limit_kontrol [label="Tutar <= Günlük Limit mi?", shape=diamond, fillcolor="#FFD700"];
+    baska_islem_kontrol [label="Başka İşlem 'E' mi?", shape=diamond, fillcolor="#FFD700"];
+
+    // Oklar ve Akış
+    basla -> kart_tak;
+    kart_tak -> pin_sor;
+
+    // PIN Döngüsü
+    pin_sor -> pin_kontrol;
+    pin_kontrol -> deneme_hakki_azalt [label=" Hayır "];
+    deneme_hakki_azalt -> deneme_hakki_kontrol;
+    deneme_hakki_kontrol -> pin_sor [label=" Evet "];
+    deneme_hakki_kontrol -> kart_bloke [label=" Hayır "];
+    kart_bloke -> bitir;
+
+    // Ana İşlem Akışı
+    pin_kontrol -> bakiye_goster [label=" Evet "];
+    bakiye_goster -> tutar_gir;
+    tutar_gir -> bakiye_kontrol;
+
+    // Koşul Kontrolleri
+    bakiye_kontrol -> tutar_kontrol [label=" Evet "];
+    bakiye_kontrol -> hata_mesaji [label=" Hayır "];
+
+    tutar_kontrol -> limit_kontrol [label=" Evet "];
+    tutar_kontrol -> hata_mesaji [label=" Hayır "];
+
+    limit_kontrol -> islem_gerceklestir [label=" Evet "];
+    limit_kontrol -> hata_mesaji [label=" Hayır "];
+
+    // Başarılı İşlem ve Tekrar Döngüsü
+    islem_gerceklestir -> para_ver;
+    para_ver -> fis_cikar;
+    fis_cikar -> baska_islem_sor;
+    hata_mesaji -> baska_islem_sor;
+
+    baska_islem_sor -> baska_islem_kontrol;
+    baska_islem_kontrol -> bakiye_goster [label=" Evet "];
+    baska_islem_kontrol -> bitir [label=" Hayır "];
+}
