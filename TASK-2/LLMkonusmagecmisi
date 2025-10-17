@@ -1,0 +1,283 @@
+yeni projeye başlıyoruz
+
+Harika bir haber! Yeni bir projeye başlamak her zaman çok heyecan vericidir.
+
+Bu süreçte size yardımcı olmak için buradayım. Projeniz hakkında biraz daha detay paylaşırsanız, elimden gelen desteği sağlamaktan mutluluk duyarım.
+
+Projenin konusu ve temel amacı nedir?
+
+İlk adımlarınız ne olacak?
+
+Fikir geliştirme, araştırma, planlama, metin yazma veya kodlama gibi konularda size nasıl bir katkım olabilir?
+
+Başlamak için sabırsızlanıyorum. Şimdiden başarılar dilerim!
+
+E-ticaret sitesinde ¨ur¨un ekleme, sepet y¨onetimi ve ¨odeme s¨urecini
+
+modelleyin.
+
+Sistem Gereksinimleri:
+
+Kullanıcı giri¸s kontrol¨u (ko¸sul)
+
+Ur¨un kategorileri arasında gezinme (d¨ong¨u) ¨
+
+Ur¨un sepete ekleme ¨
+
+Stok kontrol¨u (ko¸sul)
+
+Sepeti g¨or¨unt¨uleme ve d¨uzenleme (d¨ong¨u)
+
+˙
+
+Indirim kodu uygulanabilir (ko¸sul)
+
+Minimum 50 TL kontrol¨u (ko¸sul)
+
+Kargo ¨ucreti hesaplama (ko¸sul: ¿200 TL ¨ucretsiz)
+
+Odeme y¨ontemi se¸cimi (ko¸sul) ¨
+
+Sipari¸s onayı
+
+F.U - O.M.K (TF Yazılım M¨uh.) ¨ Hafta 2 - Akı¸s Diyagramları Lab 5 Ekim 2025 10 / 32
+
+G¨orev 2: Online Alı¸sveri¸s Sepet Sistemi-Devamı
+
+Zorluk: Orta-Zor
+
+Birden fazla d¨ong¨u ve i¸c i¸ce ko¸sullar!
+
+F.U - O.M.K (TF Yazılım M¨uh.) ¨ Hafta 2 - Akı¸s Diyagramları Lab 5 Ekim 2025 11 / 32
+
+G¨orev 2: LLM Prompt Onerileri ¨
+
+Adım 1: Sistem Analizi
+
+˙
+
+Ilk Prompt:
+
+“E-ticaret sitesinde sepet y¨onetimi ve ¨odeme sistemini adım adım a¸cıkla.
+
+Kullanıcı giri¸si, ¨ur¨un ekleme, stok kontrol¨u, indirim kodu, kargo hesaplama
+
+ve ¨odeme a¸samalarını i¸cermeli.”
+
+F.U - O.M.K (TF Yazılım M¨uh.) ¨ Hafta 2 - Akı¸s Diyagramları Lab 5 Ekim 2025 12 / 32
+
+G¨orev 2: LLM Prompt Onerileri-DEVAM ¨
+
+Adım 2: Pseudocode
+
+˙
+
+Ikinci Prompt:
+
+“Bu sistemi pseudocode olarak yaz. D¨ong¨uler i¸cin DONG ¨ U, ko¸sullar i¸cin ¨
+
+EGER- ˘ ˙
+
+ISE kullan. Her adımı BAS¸LA ile ba¸slat, B˙
+
+IT˙
+
+IR ile bitir. T¨um
+
+kontrol noktalarını belirt.”
+
+Adım 3: DOT Kodu
+
+U¸c¨unc¨u Prompt: ¨
+
+“Pseudocode’u Graphviz DOT formatına ¸cevir. rankdir=TB kullan. Karar
+
+noktalarında EVET/HAYIR etiketlerini unutma.”
+
+Elbette, e-ticaret sitesi için istenen sepet yönetimi ve ödeme sürecini modelleyen sistem analizi, pseudocode ve Graphviz DOT kodu aşağıda adım adım sunulmuştur.
+
+Adım 1: Sistem Analizi (Açıklama)
+E-ticaret sitesindeki alışveriş ve ödeme süreci, kullanıcının sisteme güvenli bir şekilde giriş yapmasıyla başlar. Giriş başarılı olduğunda, kullanıcı ürün kategorileri arasında gezinerek istediği ürünleri inceleyebilir. Bir ürünü beğenmesi durumunda, sistem ürünün stok durumunu anlık olarak kontrol eder; stok mevcutsa ürün sepete eklenir, aksi takdirde kullanıcı bilgilendirilir.
+
+Kullanıcı, alışverişini tamamladıktan sonra sepet sayfasına gider. Bu sayfada, sepetindeki ürünleri görüntüleyebilir, miktarını değiştirebilir veya istemediği ürünleri çıkarabilir. Ardından ödeme adımına geçer. Bu aşamada, varsa bir indirim kodu uygulayabilir. Sistem, sepetin toplam tutarının minimum sipariş limiti olan 50 TL'yi geçip geçmediğini kontrol eder. Sonrasında, sipariş tutarına göre kargo ücreti hesaplanır; 200 TL ve üzeri alışverişlerde kargo ücretsizdir. Son olarak, kullanıcı kendine uygun ödeme yöntemini (Kredi Kartı, Havale vb.) seçerek işlemi tamamlar ve sipariş onayı alır.
+
+Adım 2: Pseudocode
+Bu pseudocode, belirtilen tüm adımları, döngüleri ve koşul yapılarını içermektedir.
+
+BAŞLA
+
+  // Değişken ve Durum Tanımlamaları
+  TANIMLA kullanici_giris_yapti_mi = HAYIR
+  TANIMLA sepet = [] // Ürünleri tutacak liste
+  TANIMLA sepet_toplami = 0
+  TANIMLA genel_toplam = 0
+
+  // Kullanıcı Giriş Kontrolü
+  YAZ "Kullanıcı adı ve şifrenizi giriniz:"
+  OKU kullanici_adi, sifre
+  EĞER kullanici_adi == "dogru_kullanici" VE sifre == "dogru_sifre"
+    kullanici_giris_yapti_mi = EVET
+  DEĞİLSE
+    YAZ "Hatalı kullanıcı adı veya şifre."
+  SON-EĞER
+
+  // Ana Alışveriş Süreci
+  EĞER kullanici_giris_yapti_mi == EVET
+    TANIMLA alisverise_devam = EVET
+    // Ürün Ekleme Döngüsü
+    DÖNGÜ (alisverise_devam == EVET)
+      YAZ "Kategoriler arasında gezinin ve bir ürün seçin:"
+      OKU secilen_urun
+      
+      // Stok Kontrolü
+      EĞER secilen_urun.stok_adeti > 0
+        sepet.EKLE(secilen_urun)
+        YAZ secilen_urun.adi + " sepete eklendi."
+      DEĞİLSE
+        YAZ "Üzgünüz, bu ürün stokta kalmamıştır."
+      SON-EĞER
+      
+      YAZ "Başka ürün eklemek istiyor musunuz? (E/H)"
+      OKU cevap
+      EĞER cevap == "H" VEYA cevap == "h"
+        alisverise_devam = HAYIR
+      SON-EĞER
+    SON-DÖNGÜ
+    
+    // Sepet Görüntüleme ve Düzenleme Döngüsü
+    TANIMLA sepeti_duzenle = EVET
+    DÖNGÜ (sepeti_duzenle == EVET)
+      YAZ "Sepetinizdeki ürünler: " + sepet.listele()
+      HESAPLA sepet_toplami = sepet.toplam_fiyat()
+      YAZ "Sepet Toplamı: " + sepet_toplami + " TL"
+      YAZ "Sepeti düzenlemek veya ödemeye geçmek için seçim yapın (Düzenle/Ödeme):"
+      OKU sepet_secimi
+      EĞER sepet_secimi == "Düzenle"
+        YAZ "Çıkarmak istediğiniz ürünü girin veya miktarı güncelleyin."
+        // Düzenleme işlemleri burada yapılır
+      DEĞİLSE
+        sepeti_duzenle = HAYIR
+      SON-EĞER
+    SON-DÖNGÜ
+
+    // İndirim Kodu Kontrolü
+    YAZ "İndirim kodunuz var mı? (E/H)"
+    OKU indirim_cevabi
+    EĞER indirim_cevabi == "E" VEYA indirim_cevabi == "e"
+      YAZ "İndirim kodunu giriniz:"
+      OKU girilen_kod
+      EĞER girilen_kod == "INDIRIM25" // Örnek geçerli kod
+        sepet_toplami = sepet_toplami * 0.75 // %25 indirim uygula
+        YAZ "İndirim uygulandı. Yeni sepet toplamı: " + sepet_toplami + " TL"
+      DEĞİLSE
+        YAZ "Geçersiz indirim kodu."
+      SON-EĞER
+    SON-EĞER
+    
+    // Minimum Tutar Kontrolü
+    EĞER sepet_toplami < 50
+      YAZ "Minimum sipariş tutarı 50 TL'dir. Lütfen sepetinize ürün ekleyin."
+    DEĞİLSE
+      // Kargo Ücreti Hesaplama
+      TANIMLA kargo_ucreti = 15 // Varsayılan kargo ücreti
+      EĞER sepet_toplami >= 200
+        kargo_ucreti = 0
+        YAZ "200 TL ve üzeri alışverişlerde kargo ücretsiz!"
+      DEĞİLSE
+        YAZ "Kargo ücreti: " + kargo_ucreti + " TL"
+      SON-EĞER
+      genel_toplam = sepet_toplami + kargo_ucreti
+      YAZ "Ödenecek Toplam Tutar: " + genel_toplam + " TL"
+      
+      // Ödeme Yöntemi Seçimi
+      YAZ "Lütfen bir ödeme yöntemi seçiniz (Kredi Kartı / Havale):"
+      OKU odeme_yontemi
+      EĞER odeme_yontemi == "Kredi Kartı" VEYA odeme_yontemi == "Havale"
+        YAZ "Ödeme işlemi gerçekleştiriliyor..."
+        YAZ "SİPARİŞİNİZ ONAYLANDI!"
+      DEĞİLSE
+        YAZ "Geçersiz ödeme yöntemi seçtiniz."
+      SON-EĞER
+    SON-EĞER
+  SON-EĞER
+
+BİTİR
+Adım 3: Graphviz DOT Kodu
+Bu DOT kodu, yukarıdaki pseudocode'un mantıksal akışını görsel bir şemaya dönüştürür.
+
+Kod snippet'i
+digraph Ecommerce_Flowchart {
+    // Grafik Ayarları
+    rankdir=TB;
+    graph [fontname = "Arial", splines=ortho];
+    node [fontname = "Arial", style=filled, fillcolor="#F8F8F8"];
+    edge [fontname = "Arial"];
+
+    // Düğüm Tanımlamaları
+    // Oval: Başla/Bitir
+    basla [label="Başla", shape=oval, fillcolor="#90EE90"];
+    bitir_hata [label="İşlem Sonlandırıldı", shape=oval, fillcolor="#FFB6C1"];
+    siparis_onay [label="Sipariş Onaylandı", shape=oval, fillcolor="#90EE90"];
+    bitir [label="Bitir", shape=oval, fillcolor="#FFB6C1"];
+
+    // Parallelogram: Girdi/Çıktı
+    kullanici_giris [label="Kullanıcı Girişi Yap", shape=parallelogram, fillcolor="#ADD8E6"];
+    kategori_gezin [label="Kategorilerde Gezin / Ürün Seç", shape=parallelogram, fillcolor="#ADD8E6"];
+    sepet_goruntule [label="Sepeti Görüntüle ve Düzenle", shape=parallelogram, fillcolor="#ADD8E6"];
+    indirim_kodu_gir [label="İndirim Kodunu Gir", shape=parallelogram, fillcolor="#ADD8E6"];
+    odeme_yontemi_sec [label="Ödeme Yöntemi Seç", shape=parallelogram, fillcolor="#ADD8E6"];
+    stok_yok_uyari [label="Stok Yok Uyarısı", shape=parallelogram, fillcolor="#FFFFE0"];
+    min_tutar_uyari [label="Minimum Tutar Uyarısı", shape=parallelogram, fillcolor="#FFFFE0"];
+
+    // Box: İşlem
+    sepete_ekle [label="Ürünü Sepete Ekle", shape=box];
+    indirim_uygula [label="İndirimi Uygula", shape=box];
+    kargo_hesapla [label="Kargo Ücreti Hesapla", shape=box];
+    odeme_yap [label="Ödeme İşlemini Gerçekleştir", shape=box];
+    
+    // Diamond: Karar
+    giris_kontrol [label="Giriş Başarılı mı?", shape=diamond, fillcolor="#FFD700"];
+    stok_kontrol [label="Stok Var mı?", shape=diamond, fillcolor="#FFD700"];
+    baska_urun_kontrol [label="Başka Ürün Eklenecek mi?", shape=diamond, fillcolor="#FFD700"];
+    odeme_adimi [label="Ödemeye Geçilsin mi?", shape=diamond, fillcolor="#FFD700"];
+    indirim_kodu_kontrol [label="İndirim Kodu Var mı?", shape=diamond, fillcolor="#FFD700"];
+    min_tutar_kontrol [label="Sepet Toplamı >= 50 TL?", shape=diamond, fillcolor="#FFD700"];
+    kargo_kontrol [label="Sepet Toplamı >= 200 TL?", shape=diamond, fillcolor="#FFD700"];
+
+    // Akış Okları
+    basla -> kullanici_giris;
+    kullanici_giris -> giris_kontrol;
+    giris_kontrol -> kategori_gezin [label=" EVET "];
+    giris_kontrol -> bitir_hata [label=" HAYIR "];
+    
+    // Ürün Ekleme Döngüsü
+    kategori_gezin -> stok_kontrol;
+    stok_kontrol -> sepete_ekle [label=" EVET "];
+    stok_kontrol -> stok_yok_uyari [label=" HAYIR "];
+    stok_yok_uyari -> baska_urun_kontrol;
+    sepete_ekle -> baska_urun_kontrol;
+    baska_urun_kontrol -> kategori_gezin [label=" EVET "];
+    
+    // Sepet ve Ödeme Aşaması
+    baska_urun_kontrol -> sepet_goruntule [label=" HAYIR "];
+    sepet_goruntule -> odeme_adimi;
+    odeme_adimi -> sepet_goruntule [label=" HAYIR (Düzenle) "];
+    odeme_adimi -> indirim_kodu_kontrol [label=" EVET (Ödeme) "];
+    
+    indirim_kodu_kontrol -> indirim_kodu_gir [label=" EVET "];
+    indirim_kodu_gir -> indirim_uygula; // Basitlik için kod kontrolü birleştirildi
+    indirim_uygula -> min_tutar_kontrol;
+    indirim_kodu_kontrol -> min_tutar_kontrol [label=" HAYIR "];
+    
+    min_tutar_kontrol -> kargo_hesapla [label=" EVET "];
+    min_tutar_kontrol -> min_tutar_uyari [label=" HAYIR "];
+    min_tutar_uyari -> bitir_hata;
+    
+    kargo_hesapla -> kargo_kontrol;
+    kargo_kontrol -> odeme_yontemi_sec [label=" EVET (Kargo Ücretsiz) "];
+    kargo_kontrol -> odeme_yontemi_sec [label=" HAYIR (Kargo Ücretli) "];
+
+    odeme_yontemi_sec -> odeme_yap;
+    odeme_yap -> siparis_onay;
+    siparis_onay -> bitir;
+}
