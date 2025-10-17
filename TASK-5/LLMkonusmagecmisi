@@ -1,0 +1,195 @@
+yeni projeye başlıyoruz
+
+Harika! Yeni bir proje için hazırım.
+
+Lütfen yeni projenin konusunu, sistem gereksinimlerini ve bu süreci nasıl modellememi istediğinizi (sistem analizi, pseudocode, Graphviz DOT kodu gibi) belirtin.
+
+Başlamak için sabırsızlanıyorum!
+
+Sistem A¸cıklaması
+
+IoT tabanlı akıllı ev g¨uvenlik sisteminin alarm ve bildirim s¨ure¸clerini
+
+modelleyin.
+
+Sistem Gereksinimleri:
+
+Sistem aktif mi kontrol¨u (ko¸sul)
+
+Sens¨or okuma d¨ong¨us¨u (d¨ong¨u - s¨urekli)
+
+Hareket sens¨or¨u kontrol¨u (ko¸sul)
+
+Kapı/pencere sens¨or¨u kontrol¨u (ko¸sul)
+
+Kamera aktivasyonu (ko¸sul)
+
+Yanlı¸s alarm kontrol¨u (ev sahibi evde mi?) (ko¸sul)
+
+Alarm seviyesi belirleme (1-d¨u¸s¨uk, 2-orta, 3-y¨uksek) (ko¸sul)
+
+Bildirim g¨onderme (SMS + App + Email)
+
+Bekle ve tekrar kontrol et (d¨ong¨u)
+
+Alarm sıfırlama veya devam ettirme (ko¸sul)
+
+Zorluk: Orta-Zor
+
+S¨urekli calısan sistem - sonsuz d¨ong¨u icinde kosullar! F.U - O.M.K (TF Yazılım M¨uh.) ¨ Hafta 2 - Akı¸s Diyagramları Lab 5 Ekim 2025 18 / 32
+
+G¨orev 5: LLM ile Ger¸cek Zamanlı Sistem
+
+S¨urekli C¸ alı¸san Sistemler ˙I¸cin:
+
+Sonsuz D¨ong¨u Yakla¸sımı
+
+“Akıllı ev g¨uvenlik sistemi 7/24 ¸calı¸sır. Ana d¨ong¨u i¸cinde sens¨or okuma,
+
+tehdit algılama, alarm verme ve bildirim g¨onderme s¨ure¸clerini i¸ceren
+
+pseudocode yaz.”
+
+Ozel Notlar: ¨
+
+Ana DONG ¨ U s¨urekli ¸calı¸sır (DO ¨ GRU ko¸sulu ile) ˘
+
+Her d¨ong¨u iterasyonunda t¨um sens¨orler kontrol edilir
+
+Tehdit seviyesine g¨ore farklı aksiyonlar alınır
+
+Alarm sıfırlama komutu gelene kadar devam eder
+
+DOT’ta Sonsuz D¨ong¨u
+
+DOT dilinde sonsuz d¨ong¨uy¨u g¨ostermek i¸cin geri ok kullanın ve ”S¨urekli”
+
+etiketi ekleyin. 
+
+Elbette, sürekli çalışan bir IoT akıllı ev güvenlik sistemi gibi gerçek zamanlı bir süreci modelleyelim. İstenen adımları ve sonsuz döngü yaklaşımını kullanarak sistemi oluşturalım.
+
+Adım 1: Genel Akış ve Çalışma Prensibi (Sistem Analizi)
+Akıllı ev güvenlik sistemi, "aktif" duruma getirildiğinde 7/24 kesintisiz olarak çalışacak şekilde tasarlanmıştır. Sistemin kalbinde, tüm sensörleri sürekli olarak tarayan sonsuz bir döngü bulunur. Bu döngünün her bir tekrarında, hareket ve kapı/pencere sensörlerinden gelen veriler okunur. Herhangi bir sensör bir anormallik (hareket veya kapı/pencerenin açılması) tespit ederse, sistem olası bir tehdit durumu olduğunu varsayar.
+
+Bir tehdit algılandığında, sistem öncelikle yanlış alarmı önlemek için ev sahibinin konumunu (evde olup olmadığını) kontrol eder. Eğer ev sahibi evde değilse, bu durum gerçek bir tehdit olarak kabul edilir, kameralar anında aktive edilir ve olayın ciddiyetine göre bir alarm seviyesi (düşük, orta, yüksek) belirlenir. Bu seviyeye uygun olarak siren çalar ve eş zamanlı olarak ev sahibine SMS, mobil uygulama bildirimi ve e-posta yoluyla çok kanallı bir uyarı gönderilir. Alarm durumu, ev sahibi tarafından manuel olarak sıfırlanana kadar devam eder.
+
+Adım 2: Pseudocode (Sonsuz Döngü ile)
+Bu pseudocode, sistemin sürekli çalışma mantığını DÖNGÜ (DOĞRU) yapısı ile modeller.
+
+BAŞLA
+
+  // Ana Sistem Döngüsü - Bu döngü sürekli çalışır
+  DÖNGÜ (DOĞRU)
+  
+    // Sistemin Aktif Olup Olmadığının Kontrolü
+    EĞER sistem_aktif_mi
+      // --- SENSÖR OKUMA VE KONTROL BAŞLANGICI ---
+      
+      // Sensörlerden verileri anlık olarak oku
+      OKU hareket_sensoru_durumu
+      OKU kapi_pencere_sensoru_durumu
+      
+      // Tehdit Algılama
+      EĞER hareket_sensoru_durumu == "HAREKET ALGILANDI" VEYA kapi_pencere_sensoru_durumu == "AÇIK"
+      
+        // Yanlış Alarm Kontrolü
+        EĞER ev_sahibi_evde_mi == HAYIR
+        
+          // Gerçek Tehdit Durumu Aksiyonları
+          İŞLEM: Kamera sistemini aktive et ve kayda başla.
+          
+          // Alarm Seviyesi Belirleme
+          TANIMLA alarm_seviyesi = 0
+          EĞER hareket_sensoru_durumu == "HAREKET ALGILANDI" VE kapi_pencere_sensoru_durumu == "AÇIK"
+            alarm_seviyesi = 3 // Yüksek Seviye
+          DEĞİLSE EĞER hareket_sensoru_durumu == "HAREKET ALGILANDI"
+            alarm_seviyesi = 2 // Orta Seviye
+          DEĞİLSE
+            alarm_seviyesi = 1 // Düşük Seviye (Sadece kapı/pencere)
+          SON-EĞER
+          
+          // Alarm ve Bildirim Gönderme
+          İŞLEM: Sireni çal (Seviye: " + alarm_seviyesi + ")"
+          İŞLEM: Bildirim Gönder (SMS, Uygulama Bildirimi, E-posta)
+          
+          // Alarm Sıfırlama Bekleme Döngüsü
+          TANIMLA alarm_devam_ediyor = EVET
+          DÖNGÜ (alarm_devam_ediyor == EVET)
+            YAZ "Alarm aktif. Sıfırlama komutu bekleniyor..."
+            OKU gelen_komut
+            EĞER gelen_komut == "SIFIRLA"
+              alarm_devam_ediyor = HAYIR
+              İŞLEM: Sireni durdur.
+            SON-EĞER
+            BEKLE (5 saniye) // Sıfırlama komutunu beklerken kısa aralıklarla kontrol et
+          SON-DÖNGÜ
+          
+        SON-EĞER // Yanlış alarm kontrolü sonu
+        
+      SON-EĞER // Tehdit algılama sonu
+      
+      // --- SENSÖR OKUMA VE KONTROL SONU ---
+      
+    SON-EĞER // Sistem aktif mi kontrolü sonu
+    
+    BEKLE (1 saniye) // Ana döngünün her tekrarı arasında kısa bir bekleme süresi
+    
+  SON-DÖNGÜ
+
+BİTİR // Not: Sonsuz döngüden dolayı bu adıma teorik olarak ulaşılamaz.
+Adım 3: Graphviz DOT Kodu (Sonsuz Döngü ile)
+Bu DOT kodu, ana döngüyü ve alarm sıfırlama bekleme döngüsünü geri oklar kullanarak görselleştirir.
+
+Kod snippet'i
+digraph SmartHome_Security_Flowchart {
+    // Grafik Ayarları
+    rankdir=TB;
+    graph [fontname = "Arial", splines=ortho];
+    node [fontname = "Arial", style=filled, fillcolor="#F8F8F8"];
+    edge [fontname = "Arial"];
+
+    // Düğüm Tanımlamaları
+    basla [label="Sistem Başlatıldı", shape=oval, fillcolor="#90EE90"];
+    
+    // Ana Döngü ve Kontroller
+    sistem_aktif_kontrol [label="Sistem Aktif mi?", shape=diamond, fillcolor="#FFD700"];
+    sensor_oku [label="Sensörleri Oku\n(Hareket, Kapı/Pencere)", shape=parallelogram, fillcolor="#ADD8E6"];
+    tehdit_kontrol [label="Tehdit Algılandı mı?", shape=diamond, fillcolor="#FFD700"];
+    yanlis_alarm_kontrol [label="Ev Sahibi Evde mi?", shape=diamond, fillcolor="#FFD700"];
+    
+    // Aksiyon Düğümleri
+    kamera_aktif [label="Kamerayı Aktive Et", shape=box];
+    seviye_belirle [label="Alarm Seviyesi Belirle\n(1-Düşük, 2-Orta, 3-Yüksek)", shape=box];
+    alarm_bildirim [label="Alarm Çal ve\nBildirim Gönder (SMS, App, Email)", shape=box];
+    
+    // Alarm Döngüsü
+    reset_kontrol [label="Sıfırlama Komutu Geldi mi?", shape=diamond, fillcolor="#FFA500"];
+    
+    // Bitiş ve Bekleme
+    bekle [label="Bekle ve Başa Dön", shape=ellipse, style=dashed];
+
+    // Akış Okları
+    basla -> sistem_aktif_kontrol;
+    
+    // Ana Sürekli Döngü
+    sistem_aktif_kontrol -> sensor_oku [label=" EVET "];
+    sistem_aktif_kontrol -> bekle [label=" HAYIR "];
+    bekle -> sistem_aktif_kontrol; // Sistem aktif değilse sürekli başa döner
+
+    sensor_oku -> tehdit_kontrol;
+    tehdit_kontrol -> yanlis_alarm_kontrol [label=" EVET "];
+    // Tehdit yoksa ana döngünün başına geri döner
+    tehdit_kontrol -> sensor_oku [label=" HAYIR \n(Sürekli Kontrol)"]; 
+
+    // Yanlış Alarm Akışı
+    yanlis_alarm_kontrol -> sensor_oku [label=" EVET (Yanlış Alarm)"];
+    
+    // Gerçek Alarm Akışı
+    yanlis_alarm_kontrol -> kamera_aktif [label=" HAYIR (Gerçek Tehdit)"];
+    kamera_aktif -> seviye_belirle -> alarm_bildirim;
+    
+    // Alarm Sıfırlama Bekleme Döngüsü
+    alarm_bildirim -> reset_kontrol;
+    reset_kontrol -> reset_kontrol [label=" HAYIR "];
+    reset_kontrol -> sensor_oku [label=" EVET (Sıfırla)"];
+}
