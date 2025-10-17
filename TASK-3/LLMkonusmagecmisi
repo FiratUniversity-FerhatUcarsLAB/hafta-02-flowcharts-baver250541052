@@ -1,0 +1,280 @@
+yeni projeye başlıyoruz
+
+Harika! Yeni göreve ve bir sonraki projeye hazırım.
+
+Lütfen yeni sistemin gereksinimlerini, hedeflerini ve modellememi istediğiniz adımları (sistem analizi, pseudocode, DOT kodu vb.) paylaşın.
+
+Başlamak için sabırsızlanıyorum!
+
+Sistem A¸cıklaması
+
+Hastanede randevu alma ve tahlil sonu¸clarına eri¸sim sistemini modelleyin.
+
+Sistem Gereksinimleri:
+
+Hasta kimlik do˘grulama (TC No)
+
+˙
+
+I¸slem se¸cimi: 1-Randevu Al, 2-Tahlil Sonucu G¨or (ko¸sul)
+
+Randevu mod¨ul¨u: Poliklinik se¸cimi, doktor listesi, uygun saatler
+
+(d¨ong¨u)
+
+Randevu onayı ve SMS g¨onderimi
+
+Tahlil mod¨ul¨u: Tahlil var mı kontrol¨u (ko¸sul)
+
+Sonu¸c hazır mı kontrol¨u (ko¸sul)
+
+Sonu¸c g¨or¨unt¨uleme veya bekleme mesajı
+
+Sonu¸cları PDF indir se¸cene˘gi
+
+Ba¸ska i¸slem yapmak ister misiniz? (d¨ong¨u)
+
+Zorluk: Zor
+
+˙
+
+Iki ayrı mod¨ul ve birden fazla ko¸sul/d¨ong¨u kombinasyonu!
+
+F.U - O.M.K (TF Yazılım M¨uh.) ¨ Hafta 2 - Akı¸s Diyagramları Lab 5 Ekim 2025 14 / 32
+
+G¨orev 3: LLM ile Mod¨uler Yakla¸sım
+
+˙Iki Mod¨ul¨u Ayrı Ayrı C¸ alı¸sın:
+
+Mod¨ul 1: Randevu Alma
+
+“Hastane randevu sistemi i¸cin algoritma: kimlik do˘grulama, poliklinik
+
+se¸cimi, doktor listesi g¨or¨unt¨uleme, uygun saatleri g¨osterme, randevu
+
+onaylama ve SMS g¨onderme. Pseudocode yaz.”
+
+Mod¨ul 2: Tahlil Sonu¸cları
+
+“Tahlil sonucu g¨or¨unt¨uleme sistemi: kimlik do˘grulama, tahlil varlı˘gı
+
+kontrol¨u, sonu¸c hazır mı kontrol¨u, g¨or¨unt¨uleme veya bekleme mesajı, PDF
+
+indirme. Pseudocode yaz.”
+
+Son Adım: Birle¸stirme
+
+Ana men¨u ile iki mod¨ul¨u birle¸stirin
+
+DOT kodunda her mod¨ul¨u ayrı subgraph olarak d¨uzenleyebilirsiniz
+
+Harika bir proje konusu! Hastane bilgi sistemi gibi modüler yapılar, algoritmik düşünme ve süreç modelleme için mükemmel bir örnektir. İstenen modüler yaklaşımla sistemi adım adım modelleyelim.
+
+Modül 1: Randevu Alma Sistemi (Pseudocode)
+Bu bölüm, yalnızca randevu alma sürecine odaklanır.
+
+BAŞLA (Randevu Modülü)
+
+  // Poliklinik ve Doktor Seçim Aşaması
+  YAZ "Lütfen poliklinik seçiniz (Örn: Dahiliye, Göz, KBB):"
+  OKU secilen_poliklinik
+  YAZ secilen_poliklinik + " bölümündeki doktorlar listeleniyor..."
+  YAZ "Lütfen bir doktor seçiniz:"
+  OKU secilen_doktor
+
+  // Uygun Saat Seçimi Döngüsü
+  TANIMLA randevu_alindi = HAYIR
+  DÖNGÜ (randevu_alindi == HAYIR)
+    YAZ secilen_doktor + " için uygun randevu saatleri:"
+    YAZ "[09:00, 09:30, 11:00, 14:30]" // Örnek uygun saatler
+    YAZ "Lütfen bir saat seçiniz:"
+    OKU secilen_saat
+
+    // Saatin uygunluk kontrolü (sistemde dolu olup olmadığı)
+    EĞER secilen_saat uygun VE boş
+      randevu_alindi = EVET
+    DEĞİLSE
+      YAZ "Seçtiğiniz saat uygun değildir veya doludur. Lütfen başka bir saat seçin."
+    SON-EĞER
+  SON-DÖNGÜ
+
+  // Randevu Onayı ve Bilgilendirme
+  YAZ "Randevunuz " + secilen_poliklinik + " bölümünde, Dr. " + secilen_doktor + " için " + secilen_saat + " saatine başarıyla oluşturulmuştur."
+  İŞLEM: "SMS Gönder: Randevu bilgileriniz telefonunuza gönderilmiştir."
+  YAZ "SMS gönderimi yapıldı."
+
+BİTİR (Randevu Modülü)
+Modül 2: Tahlil Sonuçları Sistemi (Pseudocode)
+Bu bölüm, yalnızca tahlil sonucu görüntüleme sürecine odaklanır.
+
+BAŞLA (Tahlil Modülü)
+
+  // Hastanın Tahlil Varlığı Kontrolü
+  EĞER hastanin_kayitli_tahlili_var_mi
+    // Sonucun Hazır Olma Durumu Kontrolü
+    EĞER tahlil_sonuclari_hazir_mi
+      YAZ "Tahlil Sonuçlarınız:"
+      İŞLEM: Sonuçları ekranda göster.
+      
+      // PDF İndirme Seçeneği
+      YAZ "Sonuçları PDF olarak indirmek ister misiniz? (E/H)"
+      OKU pdf_secimi
+      EĞER pdf_secimi == "E" VEYA pdf_secimi == "e"
+        İŞLEM: "Sonuçları PDF olarak indir."
+        YAZ "PDF dosyası indirildi."
+      SON-EĞER
+    DEĞİLSE
+      YAZ "Tahlil sonuçlarınız henüz hazır değil. Lütfen daha sonra tekrar kontrol ediniz."
+    SON-EĞER
+  DEĞİLSE
+    YAZ "Sistemde adınıza kayıtlı bir tahlil bulunmamaktadır."
+  SON-EĞER
+
+BİTİR (Tahlil Modülü)
+Son Adım: Birleştirilmiş Sistem (Pseudocode ve DOT Kodu)
+Birleştirilmiş Pseudocode
+Bu kod, ana menü ile iki modülü birleştirir ve genel sistem akışını yönetir.
+
+BAŞLA
+
+  // Kimlik Doğrulama
+  YAZ "Lütfen TC Kimlik Numaranızı giriniz:"
+  OKU girilen_tc
+  EĞER girilen_tc geçerli_mi
+    YAZ "Kimlik doğrulama başarılı."
+    
+    // Ana İşlem Döngüsü
+    TANIMLA baska_islem = EVET
+    DÖNGÜ (baska_islem == EVET)
+      YAZ "Lütfen yapmak istediğiniz işlemi seçiniz:"
+      YAZ "1 - Randevu Al"
+      YAZ "2 - Tahlil Sonucu Görüntüle"
+      OKU islem_secimi
+      
+      // İşlem Seçimi Kontrolü
+      EĞER islem_secimi == 1
+        // --- Randevu Modülü Başlangıcı ---
+        // (Modül 1'deki pseudocode buraya entegre edilir)
+        YAZ "Poliklinik seçiniz..."
+        // ... (ilgili tüm adımlar) ...
+        YAZ "Randevu onayı ve SMS gönderimi tamamlandı."
+        // --- Randevu Modülü Sonu ---
+        
+      DEĞİLSE EĞER islem_secimi == 2
+        // --- Tahlil Modülü Başlangıcı ---
+        // (Modül 2'deki pseudocode buraya entegre edilir)
+        EĞER hastanin_kayitli_tahlili_var_mi
+          // ... (ilgili tüm adımlar) ...
+          YAZ "Sonuçlar görüntülendi."
+        DEĞİLSE
+          YAZ "Kayıtlı tahlil bulunamadı."
+        SON-EĞER
+        // --- Tahlil Modülü Sonu ---
+        
+      DEĞİLSE
+        YAZ "Geçersiz bir seçim yaptınız."
+      SON-EĞER
+      
+      // Başka İşlem Sorgusu
+      YAZ "Başka bir işlem yapmak ister misiniz? (E/H)"
+      OKU devam_cevabi
+      EĞER devam_cevabi == "H" VEYA devam_cevabi == "h"
+        baska_islem = HAYIR
+      SON-EĞER
+    SON-DÖNGÜ
+    
+  DEĞİLSE
+    YAZ "Geçersiz TC Kimlik Numarası. Sistemden çıkılıyor."
+  SON-EĞER
+  
+  YAZ "İyi günler dileriz."
+BİTİR
+Graphviz DOT Kodu (Subgraph ile Modüler Tasarım)
+Bu DOT kodu, iki ana modülü subgraph kullanarak görsel olarak ayırır ve ana menü üzerinden bu modüllere geçişi gösterir.
+
+Kod snippet'i
+digraph Hospital_System_Flowchart {
+    // Grafik Ayarları
+    rankdir=TB;
+    graph [fontname = "Arial", splines=ortho, label="Hastane Randevu ve Tahlil Sistemi", labelloc=t, fontsize=16];
+    node [fontname = "Arial", style=filled, fillcolor="#F8F8F8"];
+    edge [fontname = "Arial"];
+
+    // Ana Düğümler
+    basla [label="Başla", shape=oval, fillcolor="#90EE90"];
+    tc_giris [label="TC Kimlik No Gir", shape=parallelogram, fillcolor="#ADD8E6"];
+    tc_kontrol [label="Kimlik Doğru mu?", shape=diamond, fillcolor="#FFD700"];
+    islem_secimi [label="İşlem Seç:\n1-Randevu Al\n2-Tahlil Sonucu", shape=diamond, fillcolor="#FFD700"];
+    baska_islem_sor [label="Başka İşlem\nİster misiniz? (E/H)", shape=diamond, fillcolor="#FFD700"];
+    bitir [label="Bitir", shape=oval, fillcolor="#FFB6C1"];
+    gecersiz_islem [label="Geçersiz İşlem Seçimi", shape=parallelogram, fillcolor="#FFFFE0"];
+
+    // Modül 1: Randevu Alma (Subgraph)
+    subgraph cluster_randevu {
+        label = "Randevu Alma Modülü";
+        color = "blue";
+        node [fillcolor="#E6E6FA"];
+        
+        poliklinik_sec [label="Poliklinik ve Doktor Seç", shape=parallelogram];
+        saat_sec [label="Uygun Saat Seç", shape=parallelogram];
+        saat_kontrol [label="Saat Uygun mu?", shape=diamond];
+        randevu_onay [label="Randevuyu Onayla", shape=box];
+        sms_gonder [label="SMS Gönder", shape=box];
+    }
+
+    // Modül 2: Tahlil Sonuçları (Subgraph)
+    subgraph cluster_tahlil {
+        label = "Tahlil Sonuçları Modülü";
+        color = "darkgreen";
+        node [fillcolor="#E8F5E9"];
+
+        tahlil_var_mi [label="Kayıtlı Tahlil Var mı?", shape=diamond];
+        sonuc_hazir_mi [label="Sonuç Hazır mı?", shape=diamond];
+        sonuc_goster [label="Sonuçları Görüntüle", shape=parallelogram];
+        pdf_indir_sor [label="PDF İndirilsin mi?", shape=diamond];
+        pdf_indir [label="PDF İndir", shape=box];
+        bekleme_mesaji [label="Bekleme Mesajı Göster", shape=parallelogram];
+        tahlil_yok_mesaji [label="Tahlil Yok Mesajı Göster", shape=parallelogram];
+    }
+    
+    // Ana Akış
+    basla -> tc_giris -> tc_kontrol;
+    tc_kontrol -> islem_secimi [label=" EVET "];
+    tc_kontrol -> bitir [label=" HAYIR "];
+    
+    islem_secimi -> poliklinik_sec [label=" 1-Randevu "];
+    islem_secimi -> tahlil_var_mi [label=" 2-Tahlil "];
+    islem_secimi -> gecersiz_islem [label=" Geçersiz "];
+    gecersiz_islem -> baska_islem_sor;
+
+    // Randevu Modülü Akışı
+    poliklinik_sec -> saat_sec;
+    saat_sec -> saat_kontrol;
+    saat_kontrol -> poliklinik_sec [label=" HAYIR "];
+    saat_kontrol -> randevu_onay [label=" EVET "];
+    randevu_onay -> sms_gonder;
+    sms_gonder -> baska_islem_sor;
+
+    // Tahlil Modülü Akışı
+    tahlil_var_mi -> sonuc_hazir_mi [label=" EVET "];
+    tahlil_var_mi -> tahlil_yok_mesaji [label=" HAYIR "];
+    tahlil_yok_mesaji -> baska_islem_sor;
+    
+    sonuc_hazir_mi -> sonuc_goster [label=" EVET "];
+    sonuc_hazir_mi -> bekleme_mesaji [label=" HAYIR "];
+    bekleme_mesaji -> baska_islem_sor;
+    
+    sonuc_goster -> pdf_indir_sor;
+    pdf_indir_sor -> pdf_indir [label=" EVET "];
+    pdf_indir -> baska_islem_sor;
+    pdf_indir_sor -> baska_islem_sor [label=" HAYIR "];
+
+    // Döngü Akışı
+    baska_islem_sor -> islem_secimi [label=" EVET "];
+    baska_islem_sor -> bitir [label=" HAYIR "];
+}
+
+
+
+Fırat Üniversitesi sohbetleriniz, modellerimizi daha iyi hale getirmek için kullanılmaz. Gemini hata yapabildiğinden verdiği yanıtları doğrulayın. Gizliliğiniz ve GeminiYeni pencerede açılır
+
